@@ -29,7 +29,7 @@ def registration_page():
                 navigate("login")
                 st.rerun()
     st.write("Already have an account?")
-    if st.button("Login"):
+    if st.button("Login", type="tertiary"):
         navigate("login")
         st.rerun()
 
