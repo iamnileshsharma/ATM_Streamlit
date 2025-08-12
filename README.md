@@ -64,4 +64,4 @@ The app will open in your browser.
 
 ## License
 
-This project
+This project is for educational purposes.
