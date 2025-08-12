@@ -18,7 +18,8 @@ def register(username, name,password, type):
         cur.close()
         return True
 
-
+def navigate(page):
+    st.session_state.page = page
 
 
 def login_user(username, password):
