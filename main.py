@@ -1,10 +1,7 @@
 import streamlit as st
-
-from database import create_table
 from registration import registration_page
 from login import login_page
 from dashboard import dashboard_page
-from reset_password import reset_page
 
 st.set_page_config(page_title="ATM App", layout="centered")
 
@@ -22,5 +19,3 @@ elif st.session_state.page == "login":
     login_page()
 elif st.session_state.page == "dashboard":
     dashboard_page()
-elif st.session_state.page=="reset":
-    reset_page()

@@ -1,7 +1,7 @@
 import streamlit as st
 from database import create_table
 from utils import navigate
-from utils import  logout_user, deposit_money, withdraw_money, get_balance
+from utils import  logout_user, deposit_money, withdraw_money, get_balance, reset_password
 import time
 def dashboard_page():
     st.title("Dashboard")
@@ -27,7 +27,7 @@ def dashboard_page():
 
     st.success(f"Hello {name}, Account type: {acc_type}")
 
-    account_tab, withdraw_tab, deposit_tab = st.tabs(["💼 Account", "💸 Withdraw", "💰 Deposit"])
+    account_tab, withdraw_tab, deposit_tab, reset_tab = st.tabs(["💼 Account", "💸 Withdraw", "💰 Deposit","🔑Reset password"])
 
 
     with account_tab:
@@ -66,9 +66,27 @@ def dashboard_page():
                     st.rerun()
             except ValueError:
                 st.error("Enter a valid number.")
-
+    
+    with reset_tab:
+        st.header("reset password")
+        password=st.text_input("current password",type="password")
+        new_password=st.text_input("new password",type="password")
+        confirm_new_pasword=st.text_input("confirm",type="password")
+        
+        if st.button("Change password"):
+            if(new_password==confirm_new_pasword):
+                if reset_password(st.session_state.username,password,new_password):
+                    st.success("Password changed succesfully")
+                    time.sleep(2)
+                    logout_user()
+                    st.rerun()
+                else:
+                    st.error("Incorrect current password, please check")
+                    time.sleep(2)
+            else:
+                st.error("New password should match with confirmed password")
 
     st.markdown("---")
+
     if st.button("Logout"):
         logout_user()
-        navigate("login")

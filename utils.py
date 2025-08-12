@@ -12,7 +12,7 @@ def register(username, name,password, type):
     if data is not None:
         st.warning("User already exists")
         return False
-    else: 
+    else:
         cur.execute("insert into users (username,name, password, type,balance) values(?,?,?,?,?)",(username, name,password,type,0.0))
         con.commit()
         cur.close()
@@ -79,3 +79,18 @@ def get_balance(username):
     data=cur.execute("select balance from users where username = ?",(username,)).fetchone()
     balance=round(data[0],2)
     return balance
+
+def reset_password(username, password, newpassword):
+    conn=connect_db()
+    cur=conn.cursor()
+    data=cur.execute("select password from users where username=?",(username,)).fetchone()
+    if password!=data[0]:
+        cur.close()
+        conn.close()
+        return False
+    else:
+        cur.execute("update users set password = ? where username = ?",(newpassword,username))
+        conn.commit()
+        cur.close()
+        conn.close()
+        return True

@@ -7,12 +7,12 @@ def login_page():
     password = st.text_input("Password", type="password")
 
     if st.button("Login"):
-        if login_user(username, password):
+        if username=="" or password=="":
+            st.warning("Please fill all the details to proceed")
+        elif login_user(username, password):
             navigate("dashboard")
             st.rerun()
-    if st.button("Forgot password?"):
-        navigate("reset")
-        st.rerun()
+
     if st.button("Back to Register"):
         navigate("register")
         st.rerun()
